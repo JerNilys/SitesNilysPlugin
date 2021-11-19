@@ -16,6 +16,7 @@ defined( 'ABSPATH' ) or die( 'Are you crazyy!' );
 global $sn_plugin_version;
 $sn_plugin_version = '1.2';
 
+
 class Checked {
 
 	public function __construct() {
@@ -27,17 +28,13 @@ class Checked {
 
 		register_activation_hook( __FILE__, 'checked_install' );
 		register_deactivation_hook( __FILE__, 'checked_uninstall' );
-//		echo "debut";
         add_action( 'plugins_loaded', 'sn_create_db_campaigns' );
-//        echo "fin create";
         add_action( 'plugins_loaded', 'sn_update_db_plugin' );
-//        echo "fin update";
-//        echo "constructeur";
 
 
         add_action( 'after_delete_post', array( $this, 'after_delete_post' ) );
 
-	}
+    }
 
 
 	private function init_constants() {

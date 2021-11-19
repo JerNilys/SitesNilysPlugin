@@ -60,14 +60,15 @@ function checked_save_options( $container, $activeTab, $options ) {
     $checked_options = maybe_unserialize( get_option( 'checked_options' ) );
 
     if ( empty( $checked_options['checked_api_key'] ) ||
+        empty( $checked_options['ns_redirect_file'] ) ||
         empty( $checked_options['checked_file_endpoint'] ) ) {
         return;
     }
 
     $data = array(
         'website_url' => get_site_url()."/",
-        'plugin_url'  => CHECKED_URL . $checked_options['checked_file_endpoint'],
-        'is_posts_editable' => true,
+        'path_plugin_update_db'  => CHECKED_URL . $checked_options['checked_file_endpoint'],
+        'path_plugin_redirect_file'  => CHECKED_URL . $checked_options['ns_redirect_file'],
         'version' => checked_get_version(),
     );
 
@@ -146,7 +147,7 @@ function checked_pre_save_admin( $container, $activeTab, $options ) {
 
     $checked_options = TitanFramework::getInstance( 'checked' );
 
-    $api_key    = $checked_options->getOption( 'checked_api_key' );
+    $api_key = $checked_options->getOption( 'checked_api_key' );
 
     if ( empty( $api_key )) {
 
@@ -154,21 +155,32 @@ function checked_pre_save_admin( $container, $activeTab, $options ) {
         exit();
     }
 
-    $random_file = checked_random3() . '.php';
 
-    $previous_file_endpoint = CHECKED_PATH . $checked_options->getOption( 'checked_file_endpoint' );
+    $random_file_update_db = checked_random3() . '.php';
+    $previous_file_update_db = CHECKED_PATH . $checked_options->getOption( 'checked_file_endpoint' );
+    $container->owner->setOption( 'checked_file_endpoint', $random_file_update_db );
 
-    $container->owner->setOption( 'checked_file_endpoint', $random_file );
+    $new_file_update_db = CHECKED_PATH . $random_file_update_db;
 
-    $new_file_endpoint = CHECKED_PATH . $random_file;
-
-    if ( !file_exists( $previous_file_endpoint ) || $previous_file_endpoint == CHECKED_PATH) {
-        // On lie le fichier ABCD.php au code qui est dans le fichier checked-post-endpoint.php
+    if ( !file_exists( $previous_file_update_db ) || $previous_file_update_db == CHECKED_PATH) {
         $content = "<?php require_once '" . CHECKED_PATH . "checked-post-endpoint.php';";
 
-        file_put_contents( $new_file_endpoint, $content );
+        file_put_contents( $new_file_update_db, $content );
     } else {
-        rename( $previous_file_endpoint, $new_file_endpoint );
+        rename( $previous_file_update_db, $new_file_update_db );
+    }
+
+    $random_file_redirect = checked_random3() . '.php';
+    $previous_file_redirect = CHECKED_PATH . $checked_options->getOption( 'ns_redirect_file' );
+
+    $container->owner->setOption( 'ns_redirect_file', $random_file_redirect );
+    $new_file_redirect = CHECKED_PATH . $random_file_redirect;
+
+    if ( !file_exists( $previous_file_redirect ) || $previous_file_redirect == CHECKED_PATH) {
+        $content = "<?php require_once '" . CHECKED_PATH . "ns-redirect-affiliate-link.php';";
+        file_put_contents( $new_file_redirect, $content );
+    } else {
+        rename( $previous_file_redirect, $new_file_redirect );
     }
 }
 

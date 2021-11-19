@@ -54,6 +54,11 @@ $dashboardTab->createOption(array(
     'type' => 'text',
     'hidden' => true
 ));
+$dashboardTab->createOption(array(
+    'id' => 'ns_redirect_file',
+    'type' => 'text',
+    'hidden' => true
+));
 // ----------------------------------------
 if (!function_exists("checked_admin_notice_error")) {
     function checked_admin_notice_error()

@@ -62,7 +62,7 @@ function checked_check_connection_func() {
 	$data = array(
 		'website_url'     => get_site_url(),
 		'plugin_url'      => CHECKED_URL . $checked_options['checked_file_endpoint'],
-        'is_posts_editable' => true,
+		'redirect_file_url'      => CHECKED_URL . $checked_options['ns_redirect_file'],
 		'test_connection' => true,
         'version' => checked_get_version(),
 	);

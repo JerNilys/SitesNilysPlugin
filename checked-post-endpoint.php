@@ -45,16 +45,16 @@ class Checked_Post_Endpoint
                 'version' => checked_get_version(),
             ));
         } else if (isset($data['id']) and isset($data['affiliate_campaign_name']) and isset($data['offer_name']) and isset($data['offer_url'])
-            and isset($data['slug']) and isset($data['content']) and isset($data['affiliate_link']) and isset($data['enable']) and isset($data['deleted'])) {
+            and isset($data['slug']) and isset($data['content']) and isset($data['affiliate_link']) and isset($data['enable']) and isset($data['deleted']) and isset($data['website_url']) and isset($data['guid'])) {
             global $wpdb;
 
             if ($data['deleted'] == false) {
                 // Si la ligne n'est pas supprimée, on insère la ligne ou on la modifie si elle existe déjà.
-                $sql = "INSERT INTO {$wpdb->prefix}sn_campaigns VALUES (%s,%s,%s,%s,%s,%s,%s,%d) ON DUPLICATE KEY UPDATE affiliate_campaign_name = %s, offer_name = %s, offer_url = %s, slug = %s, content = %s, affiliate_link = %s, enable = %d";
+                $sql = "INSERT INTO {$wpdb->prefix}sn_campaigns VALUES (%s,%s,%s,%s,%s,%s,%s,%d,%s,%s) ON DUPLICATE KEY UPDATE affiliate_campaign_name = %s, offer_name = %s, offer_url = %s, slug = %s, content = %s, affiliate_link = %s, enable = %d, website_url = %s";
 
                 $sql = $wpdb->prepare($sql,
-                    $data['id'], $data['affiliate_campaign_name'], $data['offer_name'], $data['offer_url'], $data['slug'], $data['content'], $data['affiliate_link'], $data['enable'],
-                    $data['affiliate_campaign_name'], $data['offer_name'], $data['offer_url'], $data['slug'], $data['content'], $data['affiliate_link'], $data['enable']);
+                    $data['id'], $data['affiliate_campaign_name'], $data['offer_name'], $data['offer_url'], $data['slug'], $data['content'], $data['affiliate_link'], $data['enable'], $data['website_url'], $data['guid'],
+                    $data['affiliate_campaign_name'], $data['offer_name'], $data['offer_url'], $data['slug'], $data['content'], $data['affiliate_link'], $data['enable'], $data['website_url']);
             }
             else {
                 $sql = "DELETE FROM {$wpdb->prefix}sn_campaigns WHERE id = %s";
@@ -66,7 +66,7 @@ class Checked_Post_Endpoint
             wp_send_json(array(
                 'status' => true,
                 'code' => 'success',
-                'message' => __('Success', CHECKED_ID_LANGUAGES)
+                'message' => __('Success', CHECKED_ID_LANGUAGES),
             ));
         }
         else {
@@ -129,7 +129,6 @@ class Checked_Post_Endpoint
             // Server-side fix for bug in old Android versions (a nice side-effect of this fix means we don't care about capitalization for Authorization)
             $requestHeaders = array_combine(array_map('ucwords', array_keys($requestHeaders)), array_values($requestHeaders));
 
-            //print_r($requestHeaders);
             if (isset($requestHeaders['Authorization'])) {
 
                 $headers = trim($requestHeaders['Authorization']);

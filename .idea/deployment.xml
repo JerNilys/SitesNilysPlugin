@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="prod-plugin">
+    <serverData>
+      <paths name="prod-plugin">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/renovationprestige.fr/wp-content/plugins/wp-plugin" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>
