@@ -50,14 +50,11 @@ class SnPlugin {
         $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
 			'https://github.com/JerNilys/SitesNilysPlugin',
 			__FILE__
-//			'checked'
 		);
 
         //Set the branch that contains the stable release.
         $myUpdateChecker->setBranch('master');
 
-        //Optional: If you're using a private repository, specify the access token like this:
-        $myUpdateChecker->setAuthentication('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');
     }
 }
 
