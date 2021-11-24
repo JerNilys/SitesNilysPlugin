@@ -15,7 +15,7 @@
 defined( 'ABSPATH' ) or die( 'Are you crazyy!' );
 
 
-class Checked {
+class SnPlugin {
 
 	public function __construct() {
 
@@ -48,7 +48,7 @@ class Checked {
 		require CHECKED_PATH . '/lib/plugin-update-checker/plugin-update-checker.php';
 
         $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
-			'https://github.com/SitesNilys/wp-plugin',
+			'https://github.com/JerNilys/SitesNilysPlugin',
 			__FILE__
 //			'checked'
 		);
@@ -57,8 +57,8 @@ class Checked {
         $myUpdateChecker->setBranch('master');
 
         //Optional: If you're using a private repository, specify the access token like this:
-//        $myUpdateChecker->setAuthentication('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');
+        $myUpdateChecker->setAuthentication('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');
     }
 }
 
-new Checked();
+new SnPlugin();

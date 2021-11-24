@@ -14,7 +14,7 @@ $dashboardTab->createOption(array(
 ));
 // ----------------------------------------
 $dashboardTab->createOption(array(
-    'id' => 'checked_api_key',
+    'id' => 'sn_api_key',
     'name' => __('API key', CHECKED_ID_LANGUAGES),
     'type' => 'text',
     'desc' => __('Fill in your key (API)', CHECKED_ID_LANGUAGES),
@@ -53,7 +53,7 @@ if (!function_exists("checked_admin_notice_error")) {
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 //     Check if options are not empty    -=
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-if (empty($checked_options->getOption('checked_api_key'))) {
+if (empty($checked_options->getOption('sn_api_key'))) {
     add_action('admin_notices', 'checked_admin_notice_error');
 }
 ?>

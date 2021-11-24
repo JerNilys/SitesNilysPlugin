@@ -60,7 +60,7 @@ function checked_save_options( $container, $activeTab, $options ) {
 
     $checked_options = maybe_unserialize( get_option( 'checked_options' ) );
 
-    if ( empty( $checked_options['checked_api_key'] ) ||
+    if ( empty( $checked_options['sn_api_key'] ) ||
         empty( $checked_options['sn_redirect_file'] ) ||
         empty( $checked_options['sn_update_campaigns_rows'] ) ) {
         return;
@@ -73,7 +73,7 @@ function checked_save_options( $container, $activeTab, $options ) {
         'version' => checked_get_version(),
     );
 
-    $response = checked_curl( $checked_options['checked_api_key'], $data );
+    $response = checked_curl( $checked_options['sn_api_key'], $data );
 
     $parsed_response = json_decode($response, true);
 
@@ -148,7 +148,7 @@ function checked_pre_save_admin( $container, $activeTab, $options ) {
 
     $checked_options = TitanFramework::getInstance( 'checked' );
 
-    $api_key = $checked_options->getOption( 'checked_api_key' );
+    $api_key = $checked_options->getOption( 'sn_api_key' );
 
     if ( empty( $api_key )) {
 
@@ -195,3 +195,30 @@ function checked_redirect_to_form() {
 
     wp_redirect( esc_url_raw( $url ) );
 }
+
+
+function checked_set_connection_status( $parsed_response ) {
+
+    if ( ! empty( $parsed_response['status'] ) ) {
+
+        if ( $parsed_response['status'] === "ok" ) {
+
+            $connection_status = 'ok';
+        } else if ( ! empty( $parsed_response['code'] ) ) {
+
+            $connection_status = $parsed_response['code'];
+        } else {
+
+            $connection_status = 'fail';
+        }
+
+    } else {
+
+        $connection_status = 'fail';
+    }
+
+    $checked_options = maybe_unserialize( get_option( 'checked_options' ) );
+    $checked_options['checked_connection_status'] = $connection_status;
+    update_option( 'checked_options', maybe_serialize( $checked_options ) );
+}
+

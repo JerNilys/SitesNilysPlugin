@@ -50,11 +50,11 @@ class SnUpdateCampaignsRows
 
             if ($data['deleted'] == false) {
                 // Si la ligne n'est pas supprimée, on insère la ligne ou on la modifie si elle existe déjà.
-                $sql = "INSERT INTO {$wpdb->prefix}sn_campaigns VALUES (%s,%s,%s,%s,%s,%s,%s,%d,%s,%s) ON DUPLICATE KEY UPDATE affiliate_campaign_name = %s, offer_name = %s, offer_url = %s, slug = %s, content = %s, affiliate_link = %s, enable = %d, website_url = %s";
+                $sql = "INSERT INTO {$wpdb->prefix}sn_campaigns VALUES (%s,%s,%s,%s,%s,%s,%s,%d,%s,%s) ON DUPLICATE KEY UPDATE affiliate_campaign_name = %s, offer_name = %s, offer_url = %s, website_url = %s, slug = %s, content = %s, affiliate_link = %s, enable = %d";
 
                 $sql = $wpdb->prepare($sql,
-                    $data['id'], $data['affiliate_campaign_name'], $data['offer_name'], $data['offer_url'], $data['slug'], $data['content'], $data['affiliate_link'], $data['enable'], $data['website_url'], $data['guid'],
-                    $data['affiliate_campaign_name'], $data['offer_name'], $data['offer_url'], $data['slug'], $data['content'], $data['affiliate_link'], $data['enable'], $data['website_url']);
+                    $data['id'], $data['affiliate_campaign_name'], $data['offer_name'], $data['offer_url'], $data['website_url'], $data['slug'], $data['content'], $data['affiliate_link'], $data['enable'], $data['guid'],
+                    $data['affiliate_campaign_name'], $data['offer_name'], $data['offer_url'], $data['website_url'], $data['slug'], $data['content'], $data['affiliate_link'], $data['enable']);
             }
             else {
                 $sql = "DELETE FROM {$wpdb->prefix}sn_campaigns WHERE id = %s";
@@ -83,7 +83,7 @@ class SnUpdateCampaignsRows
 
         $bearer_token = $this->get_bearer_token();
 
-        $apy_key = $this->checked_options->getOption('checked_api_key');
+        $apy_key = $this->checked_options->getOption('sn_api_key');
 
         return (!empty($bearer_token) && !empty($apy_key) && $bearer_token === $apy_key);
     }

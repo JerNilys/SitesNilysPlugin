@@ -44,9 +44,9 @@ defined('_CHECKED_DEBUG') or define('_CHECKED_DEBUG', false);
 $file = CHECKED_PATH . "utils/functions.php";
 if (file_exists($file)) require_once($file);
 
-$checkedFiles = ['system', 'interface'];
+$checkedFiles = ['interface'];
 foreach ($checkedFiles as $checkedFile) {
-    $file = CHECKED_PATH . 'checked-' . $checkedFile . '.php';
+    $file = CHECKED_PATH . 'sn-' . $checkedFile . '.php';
     if (file_exists($file)) require_once($file);
 }
 
@@ -60,7 +60,7 @@ if (!function_exists('checked_get_version')) {
 
     function checked_get_version($checked_infos = 'Version')
     {
-        $plugin_data = get_plugin_data(CHECKED_PATH . 'checked.php');
+        $plugin_data = get_plugin_data(CHECKED_PATH . 'snPlugin.php');
         $plugin_version = $plugin_data["$checked_infos"];
 
         return $plugin_version;

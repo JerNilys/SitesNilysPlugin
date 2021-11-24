@@ -5,7 +5,7 @@
       <paths name="prod-plugin">
         <serverdata>
           <mappings>
-            <mapping deploy="/renovationprestige.fr/wp-content/plugins/wp-plugin" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/renovationprestige.fr/wp-content/plugins/66nn" local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>
