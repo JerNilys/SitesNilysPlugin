@@ -6,17 +6,16 @@
  * @license     GPL-3.0+
  * Plugin Name: SitesNilys
  * Description: Mise à jour de vos posts depuis la plateforme sites.nilys.com
- * Version:     1.1.1
+ * Version:     1.0
  * Text Domain: SitesNilys
  * License:     GPL-3.0+
  * License URI: http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
 defined( 'ABSPATH' ) or die( 'Are you crazyy!' );
-global $sn_plugin_version;
-$sn_plugin_version = '1.2';
 
-class Checked {
+
+class SnPlugin {
 
 	public function __construct() {
 
@@ -27,17 +26,10 @@ class Checked {
 
 		register_activation_hook( __FILE__, 'checked_install' );
 		register_deactivation_hook( __FILE__, 'checked_uninstall' );
-//		echo "debut";
-        add_action( 'plugins_loaded', 'sn_create_db_campaigns' );
-//        echo "fin create";
-        add_action( 'plugins_loaded', 'sn_update_db_plugin' );
-//        echo "fin update";
-//        echo "constructeur";
-
 
         add_action( 'after_delete_post', array( $this, 'after_delete_post' ) );
 
-	}
+    }
 
 
 	private function init_constants() {
@@ -56,17 +48,17 @@ class Checked {
 		require CHECKED_PATH . '/lib/plugin-update-checker/plugin-update-checker.php';
 
         $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
-			'https://github.com/SitesNilys/wp-plugin',
-			__FILE__,
-			'checked'
+			'https://github.com/JerNilys/SitesNilysPlugin',
+			__FILE__
+//			'checked'
 		);
 
         //Set the branch that contains the stable release.
         $myUpdateChecker->setBranch('master');
 
         //Optional: If you're using a private repository, specify the access token like this:
-        $myUpdateChecker->setAuthentication('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');
+        $myUpdateChecker->setAuthentication('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');
     }
 }
 
-new Checked();
+new SnPlugin();

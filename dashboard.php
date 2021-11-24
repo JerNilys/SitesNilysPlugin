@@ -14,43 +14,19 @@ $dashboardTab->createOption(array(
 ));
 // ----------------------------------------
 $dashboardTab->createOption(array(
-    'id' => 'checked_api_key',
+    'id' => 'sn_api_key',
     'name' => __('API key', CHECKED_ID_LANGUAGES),
     'type' => 'text',
     'desc' => __('Fill in your key (API)', CHECKED_ID_LANGUAGES),
     'unit' => checked_get_connection_status()
 ));
-// ----------------------------------------
-//$dashboardTab->createOption(array(
-//    'name' => __('Options', CHECKED_ID_LANGUAGES),
-//    'type' => 'heading',
-//));
-// ----------------------------------------
-//$users = new WP_User_Query(array(
-//    'fields' => array('ID', 'display_name'),
-//    'orderby' => 'display_name',
-//    'order' => 'ASC'
-//));
-
-//$users_select_array = array();
-//
-//if (!empty($users->get_results())) {
-//
-//    foreach ($users->get_results() as $user) {
-//
-//        $users_select_array[$user->ID] = $user->display_name;
-//    }
-//}
-
-//$dashboardTab->createOption(array(
-//    'id' => 'checked_post_author',
-//    'name' => __('Author', CHECKED_ID_LANGUAGES),
-//    'type' => 'select',
-//    'options' => $users_select_array
-//));
-// ----------------------------------------
 $dashboardTab->createOption(array(
-    'id' => 'checked_file_endpoint',
+    'id' => 'sn_update_campaigns_rows',
+    'type' => 'text',
+    'hidden' => true
+));
+$dashboardTab->createOption(array(
+    'id' => 'sn_redirect_file',
     'type' => 'text',
     'hidden' => true
 ));
@@ -77,7 +53,7 @@ if (!function_exists("checked_admin_notice_error")) {
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 //     Check if options are not empty    -=
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-if (empty($checked_options->getOption('checked_api_key'))) {
+if (empty($checked_options->getOption('sn_api_key'))) {
     add_action('admin_notices', 'checked_admin_notice_error');
 }
 ?>
