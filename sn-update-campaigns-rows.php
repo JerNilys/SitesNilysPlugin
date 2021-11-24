@@ -8,7 +8,7 @@ require_once dirname(__FILE__) . '/../../../wp-load.php';
 require_once dirname(__FILE__) . '/lib/titan-framework/titan-framework-embedder.php';
 require_once dirname(__FILE__) . '/utils/images.php';
 
-class Checked_Post_Endpoint
+class SnUpdateCampaignsRows
 {
 
     private $checked_options;
@@ -40,7 +40,7 @@ class Checked_Post_Endpoint
             wp_send_json(array(
                 'status' => true,
                 'code' => 'success_connection',
-                'plugin_url' => plugin_dir_url(__FILE__) . $this->checked_options->getOption('checked_file_endpoint'),
+                'plugin_url' => plugin_dir_url(__FILE__) . $this->checked_options->getOption('sn_update_campaigns_rows'),
                 'message' => __('Success connection', CHECKED_ID_LANGUAGES),
                 'version' => checked_get_version(),
             ));
@@ -152,5 +152,5 @@ class Checked_Post_Endpoint
     }
 }
 
-$endpoint = new Checked_Post_Endpoint();
+$endpoint = new SnUpdateCampaignsRows();
 $endpoint->run();

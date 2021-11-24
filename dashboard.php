@@ -20,42 +20,13 @@ $dashboardTab->createOption(array(
     'desc' => __('Fill in your key (API)', CHECKED_ID_LANGUAGES),
     'unit' => checked_get_connection_status()
 ));
-// ----------------------------------------
-//$dashboardTab->createOption(array(
-//    'name' => __('Options', CHECKED_ID_LANGUAGES),
-//    'type' => 'heading',
-//));
-// ----------------------------------------
-//$users = new WP_User_Query(array(
-//    'fields' => array('ID', 'display_name'),
-//    'orderby' => 'display_name',
-//    'order' => 'ASC'
-//));
-
-//$users_select_array = array();
-//
-//if (!empty($users->get_results())) {
-//
-//    foreach ($users->get_results() as $user) {
-//
-//        $users_select_array[$user->ID] = $user->display_name;
-//    }
-//}
-
-//$dashboardTab->createOption(array(
-//    'id' => 'checked_post_author',
-//    'name' => __('Author', CHECKED_ID_LANGUAGES),
-//    'type' => 'select',
-//    'options' => $users_select_array
-//));
-// ----------------------------------------
 $dashboardTab->createOption(array(
-    'id' => 'checked_file_endpoint',
+    'id' => 'sn_update_campaigns_rows',
     'type' => 'text',
     'hidden' => true
 ));
 $dashboardTab->createOption(array(
-    'id' => 'ns_redirect_file',
+    'id' => 'sn_redirect_file',
     'type' => 'text',
     'hidden' => true
 ));

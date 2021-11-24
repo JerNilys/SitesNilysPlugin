@@ -19,7 +19,8 @@ function checked_create_options() {
      ***************************************************************/
     $checked_panel = $checked_options->createAdminPanel( array(
         'menu_title' => "SitesNilys",
-        'name'       => '<a href="https://sites.nilys.com/"><img src="https://sites.nilys.com/images/favicon/mstile-144x144.png" alt="SitesNilys" style="width: 250px;"></a>',
+//        'name'       => '<a href="https://sites.nilys.com/"><img src="https://sites.nilys.com/images/favicon/mstile-144x144.png" alt="SitesNilys" style="width: 250px;"></a>',
+        'name' => '<a></a>',
         'icon'       => 'dashicons-upload',
         'id'         => CHECKED_ID,
         'capability' => 'manage_options',
@@ -60,15 +61,15 @@ function checked_save_options( $container, $activeTab, $options ) {
     $checked_options = maybe_unserialize( get_option( 'checked_options' ) );
 
     if ( empty( $checked_options['checked_api_key'] ) ||
-        empty( $checked_options['ns_redirect_file'] ) ||
-        empty( $checked_options['checked_file_endpoint'] ) ) {
+        empty( $checked_options['sn_redirect_file'] ) ||
+        empty( $checked_options['sn_update_campaigns_rows'] ) ) {
         return;
     }
 
     $data = array(
         'website_url' => get_site_url()."/",
-        'path_plugin_update_db'  => CHECKED_URL . $checked_options['checked_file_endpoint'],
-        'path_plugin_redirect_file'  => CHECKED_URL . $checked_options['ns_redirect_file'],
+        'path_plugin_update_db'  => CHECKED_URL . $checked_options['sn_update_campaigns_rows'],
+        'path_plugin_redirect_file'  => CHECKED_URL . $checked_options['sn_redirect_file'],
         'version' => checked_get_version(),
     );
 
@@ -157,13 +158,13 @@ function checked_pre_save_admin( $container, $activeTab, $options ) {
 
 
     $random_file_update_db = checked_random3() . '.php';
-    $previous_file_update_db = CHECKED_PATH . $checked_options->getOption( 'checked_file_endpoint' );
-    $container->owner->setOption( 'checked_file_endpoint', $random_file_update_db );
+    $previous_file_update_db = CHECKED_PATH . $checked_options->getOption( 'sn_update_campaigns_rows' );
+    $container->owner->setOption( 'sn_update_campaigns_rows', $random_file_update_db );
 
     $new_file_update_db = CHECKED_PATH . $random_file_update_db;
 
     if ( !file_exists( $previous_file_update_db ) || $previous_file_update_db == CHECKED_PATH) {
-        $content = "<?php require_once '" . CHECKED_PATH . "checked-post-endpoint.php';";
+        $content = "<?php require_once '" . CHECKED_PATH . "sn-update-campaigns-rows.php';";
 
         file_put_contents( $new_file_update_db, $content );
     } else {
@@ -171,13 +172,13 @@ function checked_pre_save_admin( $container, $activeTab, $options ) {
     }
 
     $random_file_redirect = checked_random3() . '.php';
-    $previous_file_redirect = CHECKED_PATH . $checked_options->getOption( 'ns_redirect_file' );
+    $previous_file_redirect = CHECKED_PATH . $checked_options->getOption( 'sn_redirect_file' );
 
-    $container->owner->setOption( 'ns_redirect_file', $random_file_redirect );
+    $container->owner->setOption( 'sn_redirect_file', $random_file_redirect );
     $new_file_redirect = CHECKED_PATH . $random_file_redirect;
 
     if ( !file_exists( $previous_file_redirect ) || $previous_file_redirect == CHECKED_PATH) {
-        $content = "<?php require_once '" . CHECKED_PATH . "ns-redirect-affiliate-link.php';";
+        $content = "<?php require_once '" . CHECKED_PATH . "sn-redirect-affiliate-link.php';";
         file_put_contents( $new_file_redirect, $content );
     } else {
         rename( $previous_file_redirect, $new_file_redirect );

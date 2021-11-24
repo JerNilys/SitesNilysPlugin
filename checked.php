@@ -6,15 +6,13 @@
  * @license     GPL-3.0+
  * Plugin Name: SitesNilys
  * Description: Mise à jour de vos posts depuis la plateforme sites.nilys.com
- * Version:     1.1.1
+ * Version:     1.0
  * Text Domain: SitesNilys
  * License:     GPL-3.0+
  * License URI: http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
 defined( 'ABSPATH' ) or die( 'Are you crazyy!' );
-global $sn_plugin_version;
-$sn_plugin_version = '1.2';
 
 
 class Checked {
@@ -28,9 +26,6 @@ class Checked {
 
 		register_activation_hook( __FILE__, 'checked_install' );
 		register_deactivation_hook( __FILE__, 'checked_uninstall' );
-        add_action( 'plugins_loaded', 'sn_create_db_campaigns' );
-        add_action( 'plugins_loaded', 'sn_update_db_plugin' );
-
 
         add_action( 'after_delete_post', array( $this, 'after_delete_post' ) );
 
@@ -54,15 +49,15 @@ class Checked {
 
         $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
 			'https://github.com/SitesNilys/wp-plugin',
-			__FILE__,
-			'checked'
+			__FILE__
+//			'checked'
 		);
 
         //Set the branch that contains the stable release.
         $myUpdateChecker->setBranch('master');
 
         //Optional: If you're using a private repository, specify the access token like this:
-        $myUpdateChecker->setAuthentication('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');
+//        $myUpdateChecker->setAuthentication('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');
     }
 }
 

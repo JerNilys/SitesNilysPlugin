@@ -8,7 +8,7 @@ require_once dirname(__FILE__) . '/../../../wp-load.php';
 require_once dirname(__FILE__) . '/lib/titan-framework/titan-framework-embedder.php';
 require_once dirname(__FILE__) . '/utils/images.php';
 
-class NsRedirectAffiliateLink
+class SnRedirectAffiliateLink
 {
 
     private $checked_options;
@@ -41,5 +41,5 @@ class NsRedirectAffiliateLink
 }
 
 
-$endpoint = new NsRedirectAffiliateLink();
+$endpoint = new SnRedirectAffiliateLink();
 $endpoint->run();
