@@ -48,37 +48,25 @@ function checked_create_options() {
         'use_reset' => false,
     ) );
 
-//    create_missing_files_after_update();
+    create_missing_files_after_update();
 
 } // END checked_create_options
 
-function create_missing_files_after_update( $upgrader_object, $options ) {
-    // The path to our plugin's main file
-    $our_plugin = plugin_basename( __FILE__ );
-    // If an update has taken place and the updated type is plugins and the plugins element exists
-    if( $options['action'] == 'update' && $options['type'] == 'plugin' && isset( $options['plugins'] ) ) {
-        // Iterate through the plugins being updated and check if ours is there
-        foreach( $options['plugins'] as $plugin ) {
-            if( $plugin == $our_plugin ) {
-                $checked_options = TitanFramework::getInstance( 'checked' );
+function create_missing_files_after_update() {
+    $checked_options = TitanFramework::getInstance( 'checked' );
 
-                // Création des fichiers s'ils existent (supprimés lors d'une mise à jour du plugin)
-                $previous_file_update_db = CHECKED_PATH . $checked_options->getOption( 'sn_update_campaigns_rows' );
-                if ( !file_exists( $previous_file_update_db ) && $previous_file_update_db != CHECKED_PATH) {
-                    $content = "<?php require_once '" . CHECKED_PATH . "sn-update-campaigns-rows.php';";
-                    file_put_contents( $previous_file_update_db, $content );
-                }
-                $previous_file_redirect = CHECKED_PATH . $checked_options->getOption( 'sn_redirect_file' );
-                if ( !file_exists( $previous_file_redirect ) && $previous_file_redirect != CHECKED_PATH) {
-                    $content = "<?php require_once '" . CHECKED_PATH . "sn-redirect-affiliate-link.php';";
-                    file_put_contents( $previous_file_redirect, $content );
-                }
-
-            }
-        }
+    // Création des fichiers s'ils existent (supprimés lors d'une mise à jour du plugin)
+    $previous_file_update_db = CHECKED_PATH . $checked_options->getOption( 'sn_update_campaigns_rows' );
+    if ( !file_exists( $previous_file_update_db ) && $previous_file_update_db != CHECKED_PATH) {
+        $content = "<?php require_once '" . CHECKED_PATH . "sn-update-campaigns-rows.php';";
+        file_put_contents( $previous_file_update_db, $content );
+    }
+    $previous_file_redirect = CHECKED_PATH . $checked_options->getOption( 'sn_redirect_file' );
+    if ( !file_exists( $previous_file_redirect ) && $previous_file_redirect != CHECKED_PATH) {
+        $content = "<?php require_once '" . CHECKED_PATH . "sn-redirect-affiliate-link.php';";
+        file_put_contents( $previous_file_redirect, $content );
     }
 }
-add_action( 'upgrader_process_complete', 'create_missing_files_after_update', 10, 2 );
 
 function checked_save_options( $container, $activeTab, $options ) {
 
