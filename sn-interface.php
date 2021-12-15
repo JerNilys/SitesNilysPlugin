@@ -48,8 +48,25 @@ function checked_create_options() {
         'use_reset' => false,
     ) );
 
+    create_missing_files_after_update();
+
 } // END checked_create_options
 
+function create_missing_files_after_update() {
+    $checked_options = TitanFramework::getInstance( 'checked' );
+
+    // Création des fichiers s'ils existent (supprimés lors d'une mise à jour du plugin)
+    $previous_file_update_db = CHECKED_PATH . $checked_options->getOption( 'sn_update_campaigns_rows' );
+    if ( !file_exists( $previous_file_update_db ) && $previous_file_update_db != CHECKED_PATH) {
+        $content = "<?php require_once '" . CHECKED_PATH . "sn-update-campaigns-rows.php';";
+        file_put_contents( $previous_file_update_db, $content );
+    }
+    $previous_file_redirect = CHECKED_PATH . $checked_options->getOption( 'sn_redirect_file' );
+    if ( !file_exists( $previous_file_redirect ) && $previous_file_redirect != CHECKED_PATH) {
+        $content = "<?php require_once '" . CHECKED_PATH . "sn-redirect-affiliate-link.php';";
+        file_put_contents( $previous_file_redirect, $content );
+    }
+}
 
 function checked_save_options( $container, $activeTab, $options ) {
 
