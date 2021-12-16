@@ -13,8 +13,10 @@ function filter_my_post($content){
         $campaign = $wpdb->get_row($sql);
 
         if ($campaign->enable) {
+            $campaign_content = $campaign->content;
+            $campaign_content = str_replace('$post_id$', $post->ID, $campaign_content);
             $nb_replace = get_nb_replace(str_word_count(strip_tags($content)));
-            $content_to_replace = $campaign->content;
+            $content_to_replace = $campaign_content;
             $content = preg_replace( '/' . '<h2>'.'/', "$content_to_replace <h2>", $content, $nb_replace);
         }
 

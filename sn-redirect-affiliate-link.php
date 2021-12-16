@@ -20,15 +20,17 @@ class SnRedirectAffiliateLink
 
     public function run()
     {
-        if (isset($_GET['id'])) {
+        if (isset($_GET['id']) and isset($_GET['post_id'])) {
             global $wpdb;
 
             $guid = $_GET['id'];
+            $post_id = $_GET['post_id'];
             $sql = "SELECT * FROM {$wpdb->prefix}sn_campaigns WHERE guid = '$guid'";
             $campaign = $wpdb->get_row($sql);
             if (isset($campaign)) {
-
-                wp_redirect($campaign->affiliate_link);
+                $affiliate_link = $campaign->affiliate_link;
+                $affiliate_link = str_replace('$post_id', $post_id, $affiliate_link);
+                wp_redirect($affiliate_link);
             }
 
         }
