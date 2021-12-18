@@ -15,7 +15,7 @@ class SnRedirectAffiliateLink
 
     public function __construct()
     {
-        $this->checked_options = TitanFramework::getInstance('checked');
+        $this->checked_options = TitanFramework::getInstance('sn');
     }
 
     public function run()

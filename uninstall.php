@@ -33,7 +33,7 @@ function send_unauthentication( $api_key, $data ) {
     return $response;
 }
 
-$checked_options = maybe_unserialize( get_option( 'checked_options' ) );
+$checked_options = maybe_unserialize( get_option( 'sn_options' ) );
 $data = array(
     'website_url' => get_site_url()."/",
 );
@@ -43,7 +43,7 @@ send_unauthentication( $checked_options['sn_api_key'], $data );
 global $wpdb;
 $wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}sn_campaigns" );
 delete_option("sn_plugin_version");
-delete_option("checked_options");
+delete_option("sn_options");
 
 
 

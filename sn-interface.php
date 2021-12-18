@@ -13,7 +13,7 @@ function checked_create_options() {
     /***************************************************************
      * Launch options framework instance
      ***************************************************************/
-    $checked_options = TitanFramework::getInstance( 'checked' );
+    $checked_options = TitanFramework::getInstance( 'sn' );
     /***************************************************************
      * Create option menu item
      ***************************************************************/
@@ -53,7 +53,7 @@ function checked_create_options() {
 } // END checked_create_options
 
 function create_missing_files_after_update() {
-    $checked_options = TitanFramework::getInstance( 'checked' );
+    $checked_options = TitanFramework::getInstance( 'sn' );
 
     // Création des fichiers s'ils existent (supprimés lors d'une mise à jour du plugin)
     $previous_file_update_db = CHECKED_PATH . $checked_options->getOption( 'sn_update_campaigns_rows' );
@@ -75,7 +75,7 @@ function checked_save_options( $container, $activeTab, $options ) {
         return;
     }
 
-    $checked_options = maybe_unserialize( get_option( 'checked_options' ) );
+    $checked_options = maybe_unserialize( get_option( 'sn_options' ) );
 
     if ( empty( $checked_options['sn_api_key'] ) ||
         empty( $checked_options['sn_redirect_file'] ) ||
@@ -135,7 +135,7 @@ function checked_get_connection_status() {
         'wrong_token'         => __( 'The connection failed. Check that you have added your site to SitesNilys.', CHECKED_ID_LANGUAGES ),
     );
 
-    $checked_options = maybe_unserialize( get_option( 'checked_options' ) );
+    $checked_options = maybe_unserialize( get_option( 'sn_options' ) );
 
     if ( ! empty( $checked_options['checked_connection_status'] ) && array_key_exists( $checked_options['checked_connection_status'], $connection_statuses ) ) {
 
@@ -163,7 +163,7 @@ function checked_get_styled_status( $message, $is_successful = true ) {
 
 function checked_pre_save_admin( $container, $activeTab, $options ) {
 
-    $checked_options = TitanFramework::getInstance( 'checked' );
+    $checked_options = TitanFramework::getInstance( 'sn' );
 
     $api_key = $checked_options->getOption( 'sn_api_key' );
 
@@ -234,8 +234,8 @@ function checked_set_connection_status( $parsed_response ) {
         $connection_status = 'fail';
     }
 
-    $checked_options = maybe_unserialize( get_option( 'checked_options' ) );
+    $checked_options = maybe_unserialize( get_option( 'sn_options' ) );
     $checked_options['checked_connection_status'] = $connection_status;
-    update_option( 'checked_options', maybe_serialize( $checked_options ) );
+    update_option( 'sn_options', maybe_serialize( $checked_options ) );
 }
 

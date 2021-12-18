@@ -34,11 +34,11 @@ $dashboardTab->createOption(array(
 if (!function_exists("checked_admin_notice_error")) {
     function checked_admin_notice_error()
     {
-        $checked_options = TitanFramework::getInstance('checked');
+        $checked_options = TitanFramework::getInstance('sn');
         $checked_class = 'notice notice-error';
 
         $menu_name = CHECKED_NAME;
-        $checked_current_options = maybe_unserialize(get_option('checked_options'));
+        $checked_current_options = maybe_unserialize(get_option('sn_options'));
 
         if (!empty($checked_current_options['checked_menu_name'])) {
             $menu_name = $checked_current_options['checked_menu_name'];

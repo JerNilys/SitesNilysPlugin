@@ -6,7 +6,7 @@
  * @license     GPL-3.0+
  * Plugin Name: SitesNilys
  * Description: Mise à jour de vos posts depuis la plateforme sites.nilys.com
- * Version:     1.0.3
+ * Version:     1.0.4
  * Text Domain: SitesNilys
  * License:     GPL-3.0+
  * License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -53,7 +53,7 @@ class SnPlugin {
 		);
 
         //Set the branch that contains the stable release.
-        $myUpdateChecker->setBranch('master');
+        $myUpdateChecker->setBranch('remove-checked');
 
     }
 }
