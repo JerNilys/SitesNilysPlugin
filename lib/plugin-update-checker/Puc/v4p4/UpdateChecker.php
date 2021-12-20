@@ -245,7 +245,7 @@ if ( !class_exists('Puc_v4p4_UpdateChecker', false) ):
 
 			$state = $this->updateState;
 			$state->setLastCheckToNow()
-				->setCheckedVersion($installedVersion)
+				->setSnVersion($installedVersion)
 				->save(); //Save before checking in case something goes wrong
 
 			$state->setUpdate($this->requestUpdate());

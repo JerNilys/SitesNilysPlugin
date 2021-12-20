@@ -5,24 +5,23 @@
 defined('ABSPATH') or die('Are you crazy!');
 
 
-add_action( 'tf_create_options', 'checked_create_options' );
-function checked_create_options() {
+add_action( 'tf_create_options', 'sn_create_options' );
+function sn_create_options() {
 
     remove_filter( 'admin_footer_text', 'addTitanCreditText' );
 
     /***************************************************************
      * Launch options framework instance
      ***************************************************************/
-    $checked_options = TitanFramework::getInstance( 'checked' );
+    $sn_options = TitanFramework::getInstance( 'sn' );
     /***************************************************************
      * Create option menu item
      ***************************************************************/
-    $checked_panel = $checked_options->createAdminPanel( array(
+    $sn_panel = $sn_options->createAdminPanel( array(
         'menu_title' => "SitesNilys",
-//        'name'       => '<a href="https://sites.nilys.com/"><img src="https://sites.nilys.com/images/favicon/mstile-144x144.png" alt="SitesNilys" style="width: 250px;"></a>',
         'name' => '<a></a>',
-        'icon'       => 'dashicons-upload',
-        'id'         => CHECKED_ID,
+        'icon'       => 'dashicons-external',
+        'id'         => SN_ID,
         'capability' => 'manage_options',
         'desc'       => '',
     ) );
@@ -30,76 +29,76 @@ function checked_create_options() {
     // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Create settings panel tabs              -=
     // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    $dashboardTab = $checked_panel->createTab( array(
-        'name' => __( 'Settings', CHECKED_ID_LANGUAGES ),
+    $dashboardTab = $sn_panel->createTab( array(
+        'name' => __( 'Settings', SN_ID_LANGUAGES ),
         'id'   => 'dashboard',
     ) );
 
-    $checkedOptionFile = CHECKED_PATH .'dashboard.php';
-    if (file_exists($checkedOptionFile))
-        require_once($checkedOptionFile);
+    $snOptionFile = SN_PATH .'dashboard.php';
+    if (file_exists($snOptionFile))
+        require_once($snOptionFile);
 
     // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // Launch options framework instance     -=
     // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     $dashboardTab->createOption( array(
         'type'      => 'save',
-        'save'      => __( 'Save', CHECKED_ID_LANGUAGES ),
+        'save'      => __( 'Save', SN_ID_LANGUAGES ),
         'use_reset' => false,
     ) );
 
     create_missing_files_after_update();
 
-} // END checked_create_options
+} // END sn_create_options
 
 function create_missing_files_after_update() {
-    $checked_options = TitanFramework::getInstance( 'checked' );
+    $sn_options = TitanFramework::getInstance( 'sn' );
 
     // Création des fichiers s'ils existent (supprimés lors d'une mise à jour du plugin)
-    $previous_file_update_db = CHECKED_PATH . $checked_options->getOption( 'sn_update_campaigns_rows' );
-    if ( !file_exists( $previous_file_update_db ) && $previous_file_update_db != CHECKED_PATH) {
-        $content = "<?php require_once '" . CHECKED_PATH . "sn-update-campaigns-rows.php';";
+    $previous_file_update_db = SN_PATH . $sn_options->getOption( 'sn_update_campaigns_rows' );
+    if ( !file_exists( $previous_file_update_db ) && $previous_file_update_db != SN_PATH) {
+        $content = "<?php require_once '" . SN_PATH . "sn-update-campaigns-rows.php';";
         file_put_contents( $previous_file_update_db, $content );
     }
-    $previous_file_redirect = CHECKED_PATH . $checked_options->getOption( 'sn_redirect_file' );
-    if ( !file_exists( $previous_file_redirect ) && $previous_file_redirect != CHECKED_PATH) {
-        $content = "<?php require_once '" . CHECKED_PATH . "sn-redirect-affiliate-link.php';";
+    $previous_file_redirect = SN_PATH . $sn_options->getOption( 'sn_redirect_file' );
+    if ( !file_exists( $previous_file_redirect ) && $previous_file_redirect != SN_PATH) {
+        $content = "<?php require_once '" . SN_PATH . "sn-redirect-affiliate-link.php';";
         file_put_contents( $previous_file_redirect, $content );
     }
 }
 
-function checked_save_options( $container, $activeTab, $options ) {
+function sn_save_options( $container, $activeTab, $options ) {
 
     if ( empty( $activeTab ) ) {
 
         return;
     }
 
-    $checked_options = maybe_unserialize( get_option( 'checked_options' ) );
+    $sn_options = maybe_unserialize( get_option( 'sn_options' ) );
 
-    if ( empty( $checked_options['sn_api_key'] ) ||
-        empty( $checked_options['sn_redirect_file'] ) ||
-        empty( $checked_options['sn_update_campaigns_rows'] ) ) {
+    if ( empty( $sn_options['sn_api_key'] ) ||
+        empty( $sn_options['sn_redirect_file'] ) ||
+        empty( $sn_options['sn_update_campaigns_rows'] ) ) {
         return;
     }
 
     $data = array(
         'website_url' => get_site_url()."/",
-        'path_plugin_update_db'  => CHECKED_URL . $checked_options['sn_update_campaigns_rows'],
-        'path_plugin_redirect_file'  => CHECKED_URL . $checked_options['sn_redirect_file'],
-        'version' => checked_get_version(),
+        'path_plugin_update_db'  => SN_URL . $sn_options['sn_update_campaigns_rows'],
+        'path_plugin_redirect_file'  => SN_URL . $sn_options['sn_redirect_file'],
+        'version' => sn_get_version(),
     );
 
-    $response = checked_curl( $checked_options['sn_api_key'], $data );
+    $response = sn_curl( $sn_options['sn_api_key'], $data );
 
     $parsed_response = json_decode($response, true);
 
-    checked_set_connection_status( $parsed_response );
+    sn_set_connection_status( $parsed_response );
 }
 
-add_action( 'tf_save_admin_checked', 'checked_save_options', 10, 3 );
+add_action( 'tf_save_admin_sn', 'sn_save_options', 10, 3 );
 
-function checked_curl( $api_key, $data ) {
+function sn_curl( $api_key, $data ) {
 
     $data_json = json_encode( $data );
 
@@ -126,32 +125,32 @@ function checked_curl( $api_key, $data ) {
     return $response;
 }
 
-function checked_get_connection_status() {
+function sn_get_connection_status() {
 
     $connection_statuses = array(
-        'fail'                => __( 'Unsuccessful connection!', CHECKED_ID_LANGUAGES ),
-        'ok'                  => __( 'Login successful!', CHECKED_ID_LANGUAGES ),
-        'blocked_by_firewall' => __( 'A firewall seems to block the connection of the plugin !', CHECKED_ID_LANGUAGES ),
-        'wrong_token'         => __( 'The connection failed. Check that you have added your site to SitesNilys.', CHECKED_ID_LANGUAGES ),
+        'fail'                => __( 'Unsuccessful connection!', SN_ID_LANGUAGES ),
+        'ok'                  => __( 'Login successful!', SN_ID_LANGUAGES ),
+        'blocked_by_firewall' => __( 'A firewall seems to block the connection of the plugin !', SN_ID_LANGUAGES ),
+        'wrong_token'         => __( 'The connection failed. Check that you have added your site to SitesNilys.', SN_ID_LANGUAGES ),
     );
 
-    $checked_options = maybe_unserialize( get_option( 'checked_options' ) );
+    $sn_options = maybe_unserialize( get_option( 'sn_options' ) );
 
-    if ( ! empty( $checked_options['checked_connection_status'] ) && array_key_exists( $checked_options['checked_connection_status'], $connection_statuses ) ) {
+    if ( ! empty( $sn_options['sn_connection_status'] ) && array_key_exists( $sn_options['sn_connection_status'], $connection_statuses ) ) {
 
-        if ( 'ok' === $checked_options['checked_connection_status'] ) {
+        if ( 'ok' === $sn_options['sn_connection_status'] ) {
 
-            return checked_get_styled_status( $connection_statuses[ $checked_options['checked_connection_status'] ] );
+            return sn_get_styled_status( $connection_statuses[ $sn_options['sn_connection_status'] ] );
         } else {
 
-            return checked_get_styled_status( $connection_statuses[ $checked_options['checked_connection_status'] ], false );
+            return sn_get_styled_status( $connection_statuses[ $sn_options['sn_connection_status'] ], false );
         }
     }
 
-    return checked_get_styled_status( $connection_statuses['fail'], false );
+    return sn_get_styled_status( $connection_statuses['fail'], false );
 }
 
-function checked_get_styled_status( $message, $is_successful = true ) {
+function sn_get_styled_status($message, $is_successful = true ) {
 
     if ( $is_successful ) {
 
@@ -161,60 +160,60 @@ function checked_get_styled_status( $message, $is_successful = true ) {
     return '<span style="color: #FF0000;"><span style="font-size: 25px; vertical-align: middle;">&#10005;</span>' . $message . '</span>';
 }
 
-function checked_pre_save_admin( $container, $activeTab, $options ) {
+function sn_pre_save_admin( $container, $activeTab, $options ) {
 
-    $checked_options = TitanFramework::getInstance( 'checked' );
+    $sn_options = TitanFramework::getInstance( 'sn' );
 
-    $api_key = $checked_options->getOption( 'sn_api_key' );
+    $api_key = $sn_options->getOption( 'sn_api_key' );
 
     if ( empty( $api_key )) {
 
-        checked_redirect_to_form();
+        sn_redirect_to_form();
         exit();
     }
 
 
-    $random_file_update_db = checked_random3() . '.php';
-    $previous_file_update_db = CHECKED_PATH . $checked_options->getOption( 'sn_update_campaigns_rows' );
+    $random_file_update_db = sn_random3() . '.php';
+    $previous_file_update_db = SN_PATH . $sn_options->getOption( 'sn_update_campaigns_rows' );
     $container->owner->setOption( 'sn_update_campaigns_rows', $random_file_update_db );
 
-    $new_file_update_db = CHECKED_PATH . $random_file_update_db;
+    $new_file_update_db = SN_PATH . $random_file_update_db;
 
-    if ( !file_exists( $previous_file_update_db ) || $previous_file_update_db == CHECKED_PATH) {
-        $content = "<?php require_once '" . CHECKED_PATH . "sn-update-campaigns-rows.php';";
+    if ( !file_exists( $previous_file_update_db ) || $previous_file_update_db == SN_PATH) {
+        $content = "<?php require_once '" . SN_PATH . "sn-update-campaigns-rows.php';";
 
         file_put_contents( $new_file_update_db, $content );
     } else {
         rename( $previous_file_update_db, $new_file_update_db );
     }
 
-    $random_file_redirect = checked_random3() . '.php';
-    $previous_file_redirect = CHECKED_PATH . $checked_options->getOption( 'sn_redirect_file' );
+    $random_file_redirect = sn_random3() . '.php';
+    $previous_file_redirect = SN_PATH . $sn_options->getOption( 'sn_redirect_file' );
 
     $container->owner->setOption( 'sn_redirect_file', $random_file_redirect );
-    $new_file_redirect = CHECKED_PATH . $random_file_redirect;
+    $new_file_redirect = SN_PATH . $random_file_redirect;
 
-    if ( !file_exists( $previous_file_redirect ) || $previous_file_redirect == CHECKED_PATH) {
-        $content = "<?php require_once '" . CHECKED_PATH . "sn-redirect-affiliate-link.php';";
+    if ( !file_exists( $previous_file_redirect ) || $previous_file_redirect == SN_PATH) {
+        $content = "<?php require_once '" . SN_PATH . "sn-redirect-affiliate-link.php';";
         file_put_contents( $new_file_redirect, $content );
     } else {
         rename( $previous_file_redirect, $new_file_redirect );
     }
 }
 
-add_action( 'tf_pre_save_admin_checked', 'checked_pre_save_admin', 10, 3 );
+add_action( 'tf_pre_save_admin_sn', 'sn_pre_save_admin', 10, 3 );
 
-function checked_redirect_to_form() {
+function sn_redirect_to_form() {
 
     $url = wp_get_referer();
-    $url = add_query_arg( 'page', urlencode( CHECKED_ID ), $url );
+    $url = add_query_arg( 'page', urlencode( SN_ID ), $url );
     $url = add_query_arg( 'tab', urlencode( 'dashboard' ), $url );
 
     wp_redirect( esc_url_raw( $url ) );
 }
 
 
-function checked_set_connection_status( $parsed_response ) {
+function sn_set_connection_status( $parsed_response ) {
 
     if ( ! empty( $parsed_response['status'] ) ) {
 
@@ -234,8 +233,8 @@ function checked_set_connection_status( $parsed_response ) {
         $connection_status = 'fail';
     }
 
-    $checked_options = maybe_unserialize( get_option( 'checked_options' ) );
-    $checked_options['checked_connection_status'] = $connection_status;
-    update_option( 'checked_options', maybe_serialize( $checked_options ) );
+    $sn_options = maybe_unserialize( get_option( 'sn_options' ) );
+    $sn_options['sn_connection_status'] = $connection_status;
+    update_option( 'sn_options', maybe_serialize( $sn_options ) );
 }
 

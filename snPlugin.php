@@ -6,7 +6,7 @@
  * @license     GPL-3.0+
  * Plugin Name: SitesNilys
  * Description: Mise à jour de vos posts depuis la plateforme sites.nilys.com
- * Version:     1.0.3
+ * Version:     1.0.4
  * Text Domain: SitesNilys
  * License:     GPL-3.0+
  * License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -22,10 +22,10 @@ class SnPlugin {
 		$this->init_constants();
 		$this->run_update_checker();
 
-		require_once( CHECKED_PATH .  'includes.php' );
+		require_once( SN_PATH .  'includes.php' );
 
-		register_activation_hook( __FILE__, 'checked_install' );
-		register_deactivation_hook( __FILE__, 'checked_uninstall' );
+		register_activation_hook( __FILE__, 'sn_install' );
+		register_deactivation_hook( __FILE__, 'sn_uninstall' );
 
         add_action( 'after_delete_post', array( $this, 'after_delete_post' ) );
 
@@ -34,18 +34,18 @@ class SnPlugin {
 
 	private function init_constants() {
 
-		defined( 'CHECKED_PATH' ) or define( 'CHECKED_PATH', plugin_dir_path( __FILE__ ) );
-		defined( 'CHECKED_URL' ) or define( 'CHECKED_URL', plugin_dir_url( __FILE__ ) );
-		defined( 'CHECKED_BASE' ) or define( 'CHECKED_BASE', plugin_basename( __FILE__ ) );
-		defined( 'CHECKED_ID' ) or define( 'CHECKED_ID', 'SitesNilys' );
-		defined( 'CHECKED_ID_LANGUAGES' ) or define( 'CHECKED_ID_LANGUAGES', 'checked-translate' );
-		defined( 'CHECKED_VERSION' ) or define( 'CHECKED_VERSION', '1.0' );
-		defined( 'CHECKED_NAME' ) or define( 'CHECKED_NAME', 'SitesNilys' );
+		defined( 'SN_PATH' ) or define( 'SN_PATH', plugin_dir_path( __FILE__ ) );
+		defined( 'SN_URL' ) or define( 'SN_URL', plugin_dir_url( __FILE__ ) );
+		defined( 'SN_BASE' ) or define( 'SN_BASE', plugin_basename( __FILE__ ) );
+		defined( 'SN_ID' ) or define( 'SN_ID', 'SitesNilys' );
+		defined( 'SN_ID_LANGUAGES' ) or define( 'SN_ID_LANGUAGES', 'sn-translate' );
+		defined( 'SN_VERSION' ) or define( 'SN_VERSION', '1.0' );
+		defined( 'SN_NAME' ) or define( 'SN_NAME', 'SitesNilys' );
 	}
 
 	private function run_update_checker() {
 
-		require CHECKED_PATH . '/lib/plugin-update-checker/plugin-update-checker.php';
+		require SN_PATH . '/lib/plugin-update-checker/plugin-update-checker.php';
 
         $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
 			'https://github.com/JerNilys/SitesNilysPlugin',

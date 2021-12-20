@@ -6,16 +6,15 @@ if (ini_get('max_execution_time') < 300) {
 
 require_once dirname(__FILE__) . '/../../../wp-load.php';
 require_once dirname(__FILE__) . '/lib/titan-framework/titan-framework-embedder.php';
-require_once dirname(__FILE__) . '/utils/images.php';
 
 class SnUpdateCampaignsRows
 {
 
-    private $checked_options;
+    private $sn_options;
 
     public function __construct()
     {
-        $this->checked_options = TitanFramework::getInstance('checked');
+        $this->sn_options = TitanFramework::getInstance('sn');
     }
 
     public function run()
@@ -26,7 +25,7 @@ class SnUpdateCampaignsRows
             wp_send_json(array(
                 'status' => false,
                 'code' => 'incorrect_api_key',
-                'message' => __('Incorrect API key.', CHECKED_ID_LANGUAGES)
+                'message' => __('Incorrect API key.', SN_ID_LANGUAGES)
             ));
 
             return;
@@ -40,9 +39,9 @@ class SnUpdateCampaignsRows
             wp_send_json(array(
                 'status' => true,
                 'code' => 'success_connection',
-                'plugin_url' => plugin_dir_url(__FILE__) . $this->checked_options->getOption('sn_update_campaigns_rows'),
-                'message' => __('Success connection', CHECKED_ID_LANGUAGES),
-                'version' => checked_get_version(),
+                'plugin_url' => plugin_dir_url(__FILE__) . $this->sn_options->getOption('sn_update_campaigns_rows'),
+                'message' => __('Success connection', SN_ID_LANGUAGES),
+                'version' =>sn_get_version(),
             ));
         } else if (isset($data['id']) and isset($data['affiliate_campaign_name']) and isset($data['offer_name']) and isset($data['offer_url'])
             and isset($data['slug']) and isset($data['content']) and isset($data['affiliate_link']) and isset($data['enable']) and isset($data['deleted']) and isset($data['website_url']) and isset($data['guid'])) {
@@ -66,14 +65,14 @@ class SnUpdateCampaignsRows
             wp_send_json(array(
                 'status' => true,
                 'code' => 'success',
-                'message' => __('Success', CHECKED_ID_LANGUAGES),
+                'message' => __('Success', SN_ID_LANGUAGES),
             ));
         }
         else {
             wp_send_json(array(
                 'status' => false,
                 'code' => 'incorrect_data',
-                'message' => __('Wrong data.', CHECKED_ID_LANGUAGES)
+                'message' => __('Wrong data.', SN_ID_LANGUAGES)
             ));
         }
     }
@@ -83,7 +82,7 @@ class SnUpdateCampaignsRows
 
         $bearer_token = $this->get_bearer_token();
 
-        $apy_key = $this->checked_options->getOption('sn_api_key');
+        $apy_key = $this->sn_options->getOption('sn_api_key');
 
         return (!empty($bearer_token) && !empty($apy_key) && $bearer_token === $apy_key);
     }

@@ -103,8 +103,8 @@ if ( !class_exists('Puc_v4p4_DebugBar_Panel', false) && class_exists('Debug_Bar_
 			$nextCheck = wp_next_scheduled($this->updateChecker->scheduler->getCronHookName());
 			$this->row('Next automatic check', $this->formatTimeWithDelta($nextCheck));
 
-			if ( $state->getCheckedVersion() !== '' ) {
-				$this->row('Checked version', htmlentities($state->getCheckedVersion()));
+			if ( $state->getSnVersion() !== '' ) {
+				$this->row('Sn version', htmlentities($state->getSnVersion()));
 				$this->row('Cached update', $state->getUpdate());
 			}
 			$this->row('Update checker class', htmlentities(get_class($this->updateChecker)));

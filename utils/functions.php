@@ -133,18 +133,18 @@ if (!function_exists("checked_rewrite_string")) {
  * Check locale WP Site
  * @return LC_TIME (setlocale)
  */
-if (!function_exists("checked_get_locale")) {
-	function checked_get_locale() {
-		$checked_locale_wp = get_locale();
-		if ($checked_locale_wp == 'fr_FR')
+if (!function_exists("sn_get_locale")) {
+	function sn_get_locale() {
+		$sn_locale_wp = get_locale();
+		if ($sn_locale_wp == 'fr_FR')
 			setlocale(LC_TIME, "fr_FR.utf8", "fra");
 		else {
-			setlocale(LC_TIME, "$checked_locale_wp.utf8", "fra");
+			setlocale(LC_TIME, "$sn_locale_wp.utf8", "fra");
 		}
 	}
 }
 
-function checked_random3( $length = 4 ) {
+function sn_random3( $length = 4 ) {
 
 	if ( function_exists( 'openssl_random_pseudo_bytes' ) ) {
 
@@ -157,10 +157,10 @@ function checked_random3( $length = 4 ) {
 		return substr( str_replace( array( '/', '+', '=' ), '', base64_encode( $bytes ) ), 0, $length );
 	}
 
-	return checked_random4( $length );
+	return sn_random4( $length );
 }
 
-function checked_random4( $length = 16 ) {
+function sn_random4( $length = 16 ) {
 
 	$pool = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
