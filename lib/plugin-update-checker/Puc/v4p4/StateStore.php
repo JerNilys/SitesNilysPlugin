@@ -11,7 +11,7 @@ if ( !class_exists('Puc_v4p4_StateStore', false) ):
 		/**
 		 * @var string Version number.
 		 */
-		protected $checkedVersion = '';
+		protected $snVersion = '';
 
 		/**
 		 * @var Puc_v4p4_Update|null Cached update.
@@ -85,18 +85,18 @@ if ( !class_exists('Puc_v4p4_StateStore', false) ):
 		/**
 		 * @return string
 		 */
-		public function getCheckedVersion() {
+		public function getSnVersion() {
 			$this->lazyLoad();
-			return $this->checkedVersion;
+			return $this->snVersion;
 		}
 
 		/**
 		 * @param string $version
 		 * @return $this
 		 */
-		public function setCheckedVersion($version) {
+		public function setSnVersion($version) {
 			$this->lazyLoad();
-			$this->checkedVersion = strval($version);
+			$this->snVersion = strval($version);
 			return $this;
 		}
 
@@ -130,7 +130,7 @@ if ( !class_exists('Puc_v4p4_StateStore', false) ):
 			$state = new stdClass();
 
 			$state->lastCheck = $this->lastCheck;
-			$state->checkedVersion = $this->checkedVersion;
+			$state->snVersion = $this->snVersion;
 
 			if ( isset($this->update)) {
 				$state->update = $this->update->toStdClass();
@@ -164,13 +164,13 @@ if ( !class_exists('Puc_v4p4_StateStore', false) ):
 
 			if ( !is_object($state) ) {
 				$this->lastCheck = 0;
-				$this->checkedVersion = '';
+				$this->snVersion = '';
 				$this->update = null;
 				return;
 			}
 
 			$this->lastCheck = intval(Puc_v4p4_Utils::get($state, 'lastCheck', 0));
-			$this->checkedVersion = Puc_v4p4_Utils::get($state, 'checkedVersion', '');
+			$this->snVersion = Puc_v4p4_Utils::get($state, 'snVersion', '');
 			$this->update = null;
 
 			if ( isset($state->update) ) {
@@ -194,7 +194,7 @@ if ( !class_exists('Puc_v4p4_StateStore', false) ):
 			delete_site_option($this->optionName);
 
 			$this->lastCheck = 0;
-			$this->checkedVersion = '';
+			$this->snVersion = '';
 			$this->update = null;
 		}
 

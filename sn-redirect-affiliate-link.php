@@ -6,16 +6,15 @@ if (ini_get('max_execution_time') < 300) {
 
 require_once dirname(__FILE__) . '/../../../wp-load.php';
 require_once dirname(__FILE__) . '/lib/titan-framework/titan-framework-embedder.php';
-require_once dirname(__FILE__) . '/utils/images.php';
 
 class SnRedirectAffiliateLink
 {
 
-    private $checked_options;
+    private $sn_options;
 
     public function __construct()
     {
-        $this->checked_options = TitanFramework::getInstance('sn');
+        $this->sn_options = TitanFramework::getInstance('sn');
     }
 
     public function run()
@@ -37,7 +36,7 @@ class SnRedirectAffiliateLink
         wp_send_json(array(
             'status' => false,
             'code' => 'incorrect_data',
-            'message' => __('Incorrect data.', CHECKED_ID_LANGUAGES)
+            'message' => __('Incorrect data.', SN_ID_LANGUAGES)
         ));
     }
 }

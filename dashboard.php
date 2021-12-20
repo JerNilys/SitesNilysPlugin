@@ -9,16 +9,16 @@ defined('ABSPATH') or die('Are you crazy!');
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 // ----------------------------------------
 $dashboardTab->createOption(array(
-    'name' => __('API', CHECKED_ID_LANGUAGES),
+    'name' => __('API', SN_ID_LANGUAGES),
     'type' => 'heading',
 ));
 // ----------------------------------------
 $dashboardTab->createOption(array(
     'id' => 'sn_api_key',
-    'name' => __('API key', CHECKED_ID_LANGUAGES),
+    'name' => __('API key', SN_ID_LANGUAGES),
     'type' => 'text',
-    'desc' => __('Fill in your key (API)', CHECKED_ID_LANGUAGES),
-    'unit' => checked_get_connection_status()
+    'desc' => __('Fill in your key (API)', SN_ID_LANGUAGES),
+    'unit' => sn_get_connection_status()
 ));
 $dashboardTab->createOption(array(
     'id' => 'sn_update_campaigns_rows',
@@ -31,29 +31,29 @@ $dashboardTab->createOption(array(
     'hidden' => true
 ));
 // ----------------------------------------
-if (!function_exists("checked_admin_notice_error")) {
-    function checked_admin_notice_error()
+if (!function_exists("sn_admin_notice_error")) {
+    function sn_admin_notice_error()
     {
-        $checked_options = TitanFramework::getInstance('sn');
-        $checked_class = 'notice notice-error';
+        $sn_options = TitanFramework::getInstance('sn');
+        $sn_class = 'notice notice-error';
 
-        $menu_name = CHECKED_NAME;
-        $checked_current_options = maybe_unserialize(get_option('sn_options'));
+        $menu_name = SN_NAME;
+        $sn_current_options = maybe_unserialize(get_option('sn_options'));
 
-        if (!empty($checked_current_options['checked_menu_name'])) {
-            $menu_name = $checked_current_options['checked_menu_name'];
+        if (!empty($sn_current_options['sn_menu_name'])) {
+            $menu_name = $sn_current_options['sn_menu_name'];
         }
 
-        $checked_message = strtoupper($menu_name) . ': ' . sprintf(__('Fill in all <a href="%s">dashboard options</a>', CHECKED_ID_LANGUAGES), get_admin_url(get_current_blog_id(), 'admin.php?page=SitesNilys&tab=dashboard'));
+        $sn_message = strtoupper($menu_name) . ': ' . sprintf(__('Fill in all <a href="%s">dashboard options</a>', SN_ID_LANGUAGES), get_admin_url(get_current_blog_id(), 'admin.php?page=SitesNilys&tab=dashboard'));
 
-        printf('<div class="%1$s"><p>%2$s</p></div>', esc_attr($checked_class), $checked_message);
+        printf('<div class="%1$s"><p>%2$s</p></div>', esc_attr($sn_class), $sn_message);
     }
 }
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 //     Check if options are not empty    -=
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-if (empty($checked_options->getOption('sn_api_key'))) {
-    add_action('admin_notices', 'checked_admin_notice_error');
+if (empty($sn_options->getOption('sn_api_key'))) {
+    add_action('admin_notices', 'sn_admin_notice_error');
 }
 ?>
