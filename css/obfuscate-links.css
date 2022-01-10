@@ -1,0 +1,8 @@
+.sn:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.sn {
+    color: #007bff;
+}
