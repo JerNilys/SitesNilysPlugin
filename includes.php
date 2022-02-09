@@ -72,4 +72,5 @@ if (!function_exists('sn_get_version')) {
 require_once(SN_PATH . 'sn-campaigns-table.php');
 
 // Replace content of post
+require_once(SN_PATH . 'lib/simple_html_dom.php');
 require_once(SN_PATH . 'sn-replace-content-post.php');

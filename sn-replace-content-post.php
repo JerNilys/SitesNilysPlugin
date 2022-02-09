@@ -12,12 +12,22 @@ function filter_my_post($content){
         $sql = "SELECT * FROM {$wpdb->prefix}sn_campaigns WHERE slug = '$slug' AND website_url = '$website'";
         $campaign = $wpdb->get_row($sql);
 
-        if ($campaign->enable) {
+        // S'il y a une campagne d'affiliation active, alors on remplace le contenu
+        if (isset($campaign) and $campaign->enable) {
             $campaign_content = $campaign->content;
+            $html = str_get_html($campaign_content);
+            // On obfusce les liens avec la classe obfuscate
+            foreach($html->find('a[class=obfuscate]') as $a) {
+                $prop = 'data-url';
+                $href = $a->href;
+                $a->href = null;
+                $a->$prop = base64_encode($href);
+            }
+
+            $campaign_content = (string)$html;
             $campaign_content = str_replace('$post_id$', $post->ID, $campaign_content);
             $nb_replace = get_nb_replace(str_word_count(strip_tags($content)));
-            $content_to_replace = $campaign_content;
-            $content = preg_replace( '/' . '<h2>'.'/', "$content_to_replace <h2>", $content, $nb_replace);
+            $content = preg_replace( '/' . '<h2>'.'/', "$campaign_content <h2>", $content, $nb_replace);
         }
 
     }
