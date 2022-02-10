@@ -58,7 +58,7 @@ class SnPlugin {
 		);
 
         //Set the branch that contains the stable release.
-        $myUpdateChecker->setBranch('obfuscation');
+        $myUpdateChecker->setBranch('master');
 
     }
 }
