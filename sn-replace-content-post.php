@@ -16,12 +16,10 @@ function filter_my_post($content){
         if (isset($campaign) and $campaign->enable) {
             $campaign_content = $campaign->content;
             $html = str_get_html($campaign_content);
-            // On obfusce les liens avec la classe obfuscate
-            foreach($html->find('a[class=obfuscate]') as $a) {
-                $prop = 'data-url';
-                $href = $a->href;
-                $a->href = null;
-                $a->$prop = base64_encode($href);
+            foreach($html->find('span[class=ob]') as $span) {
+                $prop = 'data-ob';
+                $href = $span->$prop;
+                $span->$prop = base64_encode($href);
             }
 
             $campaign_content = (string)$html;

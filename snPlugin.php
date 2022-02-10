@@ -6,7 +6,7 @@
  * @license     GPL-3.0+
  * Plugin Name: SitesNilys
  * Description: Mise à jour de vos posts depuis la plateforme sites.nilys.com
- * Version:     1.0.5
+ * Version:     1.0.6
  * Text Domain: SitesNilys
  * License:     GPL-3.0+
  * License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -33,8 +33,8 @@ class SnPlugin {
     }
 
     function sn_load_scripts(){
-        wp_enqueue_script( 'obfuscate-link-js', plugin_dir_url( __FILE__ ) . 'js/obfuscate-links.js', array('jquery'));
-        wp_enqueue_style( 'obfuscate-link-css', plugins_url( 'css/obfuscate-links.css' , __FILE__ ) );
+        wp_enqueue_script( 'sn-scripts-js', plugin_dir_url( __FILE__ ) . 'js/sn-scripts.js', array('jquery'));
+        wp_enqueue_style( 'sn-styles-css', plugins_url( 'css/sn-styles.css' , __FILE__ ) );
     }
 
 	private function init_constants() {
