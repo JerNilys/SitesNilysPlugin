@@ -15,6 +15,7 @@ function filter_my_post($content){
         // S'il y a une campagne d'affiliation active, alors on remplace le contenu
         if (isset($campaign) and $campaign->enable) {
             $campaign_content = $campaign->content;
+            $campaign_content = str_replace('$post_id$', $post->ID, $campaign_content);
             $html = str_get_html($campaign_content);
             foreach($html->find('span[class=ob]') as $span) {
                 $prop = 'data-ob';
@@ -23,7 +24,6 @@ function filter_my_post($content){
             }
 
             $campaign_content = (string)$html;
-            $campaign_content = str_replace('$post_id$', $post->ID, $campaign_content);
             $nb_replace = get_nb_replace(str_word_count(strip_tags($content)));
             $content = preg_replace( '/' . '<h2>'.'/', "$campaign_content <h2>", $content, $nb_replace);
         }
