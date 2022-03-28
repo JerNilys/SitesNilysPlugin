@@ -20,7 +20,13 @@ function get_sql_query()
             `content` text COLLATE utf8mb4_unicode_ci NOT NULL,
             `affiliate_link` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
             `enable` tinyint(1) NOT NULL,
-            `guid` varchar(4) COLLATE utf8mb4_unicode_ci NOT NULL,
+            `guid` varchar(4) COLLATE utf8mb4_unicode_ci NOT NULL,     
+            `banner_text` text COLLATE utf8mb4_unicode_ci,
+            `banner_text_color` varchar(255) COLLATE utf8mb4_unicode_ci,
+            `banner_bg_color` varchar(255) COLLATE utf8mb4_unicode_ci,            
+            `enable_banner_sd` tinyint(1) NOT NULL DEFAULT FALSE,
+            `enable_banner_md` tinyint(1) NOT NULL DEFAULT FALSE,
+            `enable_banner_ld` tinyint(1) NOT NULL DEFAULT FALSE,
             PRIMARY KEY  (id)
         ) $charset_collate;";
 }
