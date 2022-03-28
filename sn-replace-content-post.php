@@ -44,7 +44,7 @@ function filter_my_post($content){
                 $text_color = $campaign->banner_text_color;
                 $bg_color = $campaign->banner_bg_color;
                 $text = $campaign->banner_text;
-                $content .= '<a href="' . $path_redirect_file .'" target="_blank" class="' . $classes . '" style="color: '. $text_color .'; background-color: '. $bg_color .'"><p>' . $text .'</p></a>';
+                $content .= '<a rel="nofollow" href="' . $path_redirect_file .'" target="_blank" class="' . $classes . '" style="color: '. $text_color .'; background-color: '. $bg_color .'"><p>' . $text .'</p></a>';
             }
         }
 
