@@ -23,7 +23,7 @@ class SnUpdateCampaignsRows
         if (!$this->is_bearer_token_valid()) {
 
             wp_send_json(array(
-                'status' => "chelou ça",
+                'status' => false,
                 'code' => 'incorrect_api_key',
                 'message' => __('Incorrect API key.', SN_ID_LANGUAGES)
             ));
@@ -48,7 +48,6 @@ class SnUpdateCampaignsRows
             global $wpdb;
 
             if ($data['deleted'] == false) {
-                $toto = "foo";
                 // Si la ligne n'est pas supprimée, on insère la ligne ou on la modifie si elle existe déjà.
                 $sql = "INSERT INTO {$wpdb->prefix}sn_campaigns (id, affiliate_campaign_name, offer_name, offer_url, website_url, slug, content, affiliate_link, enable, guid, banner_text, banner_text_color, banner_bg_color, enable_banner_sd, enable_banner_md, enable_banner_ld) 
                         VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) ON DUPLICATE KEY 
