@@ -26,6 +26,26 @@ function filter_my_post($content){
             $campaign_content = (string)$html;
             $nb_replace = get_nb_replace(str_word_count(strip_tags($content)));
             $content = preg_replace( '/' . '<h2>'.'/', "$campaign_content <h2>", $content, $nb_replace);
+
+            // Création de la bannière si besoin
+            if ($campaign->enable_banner_sd || $campaign->enable_banner_md || $campaign->enable_banner_ld) {
+                $classes = "";
+                if ($campaign->enable_banner_sd) {
+                    $classes .= "banner-sd ";
+                }
+                if ($campaign->enable_banner_md) {
+                    $classes .= "banner-md ";
+                }
+                if ($campaign->enable_banner_ld) {
+                    $classes .= "banner-ld";
+                }
+                $sn_options = maybe_unserialize( get_option( 'sn_options' ) );
+                $path_redirect_file = SN_URL . $sn_options['sn_redirect_file'] . "?id=" . $campaign->guid . "&post_id=" . $post->ID;
+                $text_color = $campaign->banner_text_color;
+                $bg_color = $campaign->banner_bg_color;
+                $text = $campaign->banner_text;
+                $content .= '<a href="' . $path_redirect_file .'" target="_blank" class="' . $classes . '" style="color: '. $text_color .'; background-color: '. $bg_color .'"><p>' . $text .'</p></a>';
+            }
         }
 
     }

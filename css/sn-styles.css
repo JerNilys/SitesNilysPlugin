@@ -2,3 +2,39 @@
     cursor: pointer;
     text-decoration: underline;
 }
+
+@media screen and (max-width: 540px) {
+    .banner-sd {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        z-index: 1000;
+        padding-top: 10px;
+    }
+}
+
+@media screen and (min-width: 540px) and (max-width: 1280px) {
+    .banner-md {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        z-index: 1000;
+        padding-top: 10px;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    .banner-ld {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        z-index: 1000;
+        padding-top: 10px;
+    }
+}
