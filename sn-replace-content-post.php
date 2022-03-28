@@ -60,6 +60,6 @@ function get_nb_replace($nb_words) {
         return 4;
     }
     else {
-        return 2;
+        return 3;
     }
 }
