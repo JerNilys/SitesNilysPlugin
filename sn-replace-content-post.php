@@ -44,7 +44,15 @@ function filter_my_post($content){
                 $text_color = $campaign->banner_text_color;
                 $bg_color = $campaign->banner_bg_color;
                 $text = $campaign->banner_text;
-                $content .= '<a rel="nofollow" href="' . $path_redirect_file .'" target="_blank" class="' . $classes . '" style="color: '. $text_color .'; background-color: '. $bg_color .'"><p>' . $text .'</p></a>';
+                $font_size = $campaign->banner_font_size;
+                $p_tag = '<p style="font-size: ' . $font_size . 'px">' . $text .'</p>';
+                $style = ' style="color: '. $text_color .' !important; background-color: '. $bg_color .'"';
+                if ($campaign->banner_obfuscate) {
+                    $banner_tag = '<span class="ob '. $classes .'" data-ob="' . base64_encode($path_redirect_file) . '" '. $style .'>'. $p_tag . '</span>';
+                } else {
+                    $banner_tag = '<a rel="nofollow" href="' . $path_redirect_file .'" target="_blank" class="' . $classes . '" '. $style . '>' . $p_tag . '</a>';
+                }
+                $content .= $banner_tag;
             }
         }
 

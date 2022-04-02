@@ -27,6 +27,8 @@ function get_sql_query()
             `enable_banner_sd` tinyint(1) NOT NULL DEFAULT FALSE,
             `enable_banner_md` tinyint(1) NOT NULL DEFAULT FALSE,
             `enable_banner_ld` tinyint(1) NOT NULL DEFAULT FALSE,
+            `banner_font_size` int(11) DEFAULT 17,
+            `banner_obfuscate` int(11) DEFAULT FALSE,
             PRIMARY KEY  (id)
         ) $charset_collate;";
 }

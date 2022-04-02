@@ -49,13 +49,13 @@ class SnUpdateCampaignsRows
 
             if ($data['deleted'] == false) {
                 // Si la ligne n'est pas supprimée, on insère la ligne ou on la modifie si elle existe déjà.
-                $sql = "INSERT INTO {$wpdb->prefix}sn_campaigns (id, affiliate_campaign_name, offer_name, offer_url, website_url, slug, content, affiliate_link, enable, guid, banner_text, banner_text_color, banner_bg_color, enable_banner_sd, enable_banner_md, enable_banner_ld) 
-                        VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) ON DUPLICATE KEY 
-                        UPDATE affiliate_campaign_name = %s, offer_name = %s, offer_url = %s, website_url = %s, slug = %s, content = %s, affiliate_link = %s, enable = %d, banner_text = %s, banner_text_color = %s, banner_bg_color = %s, enable_banner_sd = %d, enable_banner_md = %d, enable_banner_ld = %d";
+                $sql = "INSERT INTO {$wpdb->prefix}sn_campaigns (id, affiliate_campaign_name, offer_name, offer_url, website_url, slug, content, affiliate_link, enable, guid, banner_text, banner_text_color, banner_bg_color, enable_banner_sd, enable_banner_md, enable_banner_ld, banner_font_size, banner_obfuscate) 
+                        VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s, %s,%s) ON DUPLICATE KEY 
+                        UPDATE affiliate_campaign_name = %s, offer_name = %s, offer_url = %s, website_url = %s, slug = %s, content = %s, affiliate_link = %s, enable = %d, banner_text = %s, banner_text_color = %s, banner_bg_color = %s, enable_banner_sd = %d, enable_banner_md = %d, enable_banner_ld = %d, banner_font_size = %s, banner_obfuscate = %s";
 
                 $sql = $wpdb->prepare($sql,
-                    $data['id'], $data['affiliate_campaign_name'], $data['offer_name'], $data['offer_url'], $data['website_url'], $data['slug'], $data['content'], $data['affiliate_link'], $data['enable'], $data['guid'], $data['banner_text'], $data['banner_text_color'], $data['banner_bg_color'], $data['enable_banner_sd'],$data['enable_banner_md'],$data['enable_banner_ld'],
-                    $data['affiliate_campaign_name'], $data['offer_name'], $data['offer_url'], $data['website_url'], $data['slug'], $data['content'], $data['affiliate_link'], $data['enable'], $data['banner_text'], $data['banner_text_color'], $data['banner_bg_color'], $data['enable_banner_sd'],$data['enable_banner_md'],$data['enable_banner_ld']);
+                    $data['id'], $data['affiliate_campaign_name'], $data['offer_name'], $data['offer_url'], $data['website_url'], $data['slug'], $data['content'], $data['affiliate_link'], $data['enable'], $data['guid'], $data['banner_text'], $data['banner_text_color'], $data['banner_bg_color'], $data['enable_banner_sd'],$data['enable_banner_md'],$data['enable_banner_ld'],$data['banner_font_size'],$data['banner_obfuscate'],
+                    $data['affiliate_campaign_name'], $data['offer_name'], $data['offer_url'], $data['website_url'], $data['slug'], $data['content'], $data['affiliate_link'], $data['enable'], $data['banner_text'], $data['banner_text_color'], $data['banner_bg_color'], $data['enable_banner_sd'],$data['enable_banner_md'],$data['enable_banner_ld'],$data['banner_font_size'], $data['banner_obfuscate']);
             }
             else {
                 $sql = "DELETE FROM {$wpdb->prefix}sn_campaigns WHERE id = %s";

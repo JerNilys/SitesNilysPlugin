@@ -10,8 +10,12 @@
         bottom: 0;
         width: 100%;
         text-align: center;
-        z-index: 1000;
-        padding-top: 10px;
+        z-index: 100001;
+        padding: 20px 0;
+    }
+    .banner-sd p {
+        margin: 0;
+        font-weight: bold;
     }
 }
 
@@ -22,8 +26,12 @@
         bottom: 0;
         width: 100%;
         text-align: center;
-        z-index: 1000;
-        padding-top: 10px;
+        z-index: 100001;
+        padding: 20px 0;
+    }
+    .banner-md p {
+        margin: 0;
+        font-weight: bold;
     }
 }
 
@@ -34,7 +42,11 @@
         bottom: 0;
         width: 100%;
         text-align: center;
-        z-index: 1000;
-        padding-top: 10px;
+        z-index: 100001;
+        padding: 20px 0;
+    }
+    .banner-ld p {
+        margin: 0;
+        font-weight: bold;
     }
 }
