@@ -14,7 +14,7 @@
         padding: 20px 0;
     }
     .banner-sd p {
-        margin: 0;
+        margin: 0 !important;
         font-weight: bold;
     }
 }
@@ -30,7 +30,7 @@
         padding: 20px 0;
     }
     .banner-md p {
-        margin: 0;
+        margin: 0 !important;
         font-weight: bold;
     }
 }
@@ -46,7 +46,7 @@
         padding: 20px 0;
     }
     .banner-ld p {
-        margin: 0;
+        margin: 0 !important;
         font-weight: bold;
     }
 }

@@ -25,7 +25,8 @@ class SnUpdateCampaignsRows
             wp_send_json(array(
                 'status' => false,
                 'code' => 'incorrect_api_key',
-                'message' => __('Incorrect API key.', SN_ID_LANGUAGES)
+                'message' => __('Incorrect API key.', SN_ID_LANGUAGES),
+                'version' =>sn_get_version(),
             ));
 
             return;
@@ -68,13 +69,15 @@ class SnUpdateCampaignsRows
                 'status' => true,
                 'code' => 'success',
                 'message' => __('Success', SN_ID_LANGUAGES),
+                'version' =>sn_get_version(),
             ));
         }
         else {
             wp_send_json(array(
                 'status' => false,
                 'code' => 'incorrect_data',
-                'message' => __('Wrong data.', SN_ID_LANGUAGES)
+                'message' => __('Wrong data.', SN_ID_LANGUAGES),
+                'version' =>sn_get_version(),
             ));
         }
     }
