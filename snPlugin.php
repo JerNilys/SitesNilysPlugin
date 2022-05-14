@@ -6,7 +6,7 @@
  * @license     GPL-3.0+
  * Plugin Name: SitesNilys
  * Description: Mise à jour de vos posts depuis la plateforme sites.nilys.com
- * Version:     1.1.6
+ * Version:     1.1.7
  * Text Domain: SitesNilys
  * License:     GPL-3.0+
  * License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -29,6 +29,8 @@ class SnPlugin {
 
         add_action( 'after_delete_post', array( $this, 'after_delete_post' ) );
         add_action( 'wp_enqueue_scripts', array( $this, 'sn_load_scripts'));
+        // Envoi le num de la nouvelle version
+        add_action( 'upgrader_process_complete', array( $this,'sn_send_updated_version'), 10, 2);
 
     }
 
@@ -47,6 +49,46 @@ class SnPlugin {
 		defined( 'SN_VERSION' ) or define( 'SN_VERSION', '1.0' );
 		defined( 'SN_NAME' ) or define( 'SN_NAME', 'SitesNilys' );
 	}
+
+    function sn_send_updated_version($upgrader_object, $options) {
+        $our_plugin = plugin_basename( __FILE__ );
+        // If an update has taken place and the updated type is plugins and the plugins element exists
+        if( $options['action'] == 'update' && $options['type'] == 'plugin' && isset( $options['plugins'] ) ) {
+            // Iterate through the plugins being updated and check if ours is there
+            foreach( $options['plugins'] as $plugin ) {
+                if( $plugin == $our_plugin ) {
+                    // Your action if it is your plugin
+                    $sn_options = maybe_unserialize( get_option( 'sn_options' ) );
+                    $data = array(
+                        'website_url' => get_site_url()."/",
+                        'version' => sn_get_version()
+                    );
+                    $data_json = json_encode( $data );
+
+                    $curl = curl_init();
+
+                    curl_setopt_array($curl, array(
+                        CURLOPT_URL => 'https://sites.nilys.com/api/wordpress-plugin/update-plugin-version',
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_ENCODING => '',
+                        CURLOPT_MAXREDIRS => 2,
+                        CURLOPT_TIMEOUT => 0,
+                        CURLOPT_FOLLOWLOCATION => true,
+                        CURLOPT_CUSTOMREQUEST => 'POST',
+                        CURLOPT_POSTFIELDS => $data_json,
+                        CURLOPT_HTTPHEADER => array(
+                            'Content-Type: application/json',
+                            'Authorization: Bearer '. $sn_options['sn_api_key']
+                        ),
+                    ));
+
+                    $response = curl_exec( $curl );
+                    curl_close( $curl );
+                }
+            }
+        }
+
+    }
 
 	private function run_update_checker() {
 
