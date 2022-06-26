@@ -9,11 +9,11 @@ function filter_my_post($content){
         $post = get_post();
         $slug = $post->post_name;
         $website = get_site_url();
-        $sql = "SELECT * FROM {$wpdb->prefix}sn_campaigns WHERE slug = '$slug' AND website_url = '$website'";
+        $sql = "SELECT * FROM {$wpdb->prefix}sn_campaigns WHERE slug = '$slug' AND website_url = '$website' AND enable = true";
         $campaign = $wpdb->get_row($sql);
 
         // S'il y a une campagne d'affiliation active, alors on remplace le contenu
-        if (isset($campaign) and $campaign->enable) {
+        if (isset($campaign)) {
             $campaign_content = $campaign->content;
             $campaign_content = str_replace('$post_id$', $post->ID, $campaign_content);
             $html = str_get_html($campaign_content);
