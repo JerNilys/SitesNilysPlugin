@@ -197,8 +197,8 @@ msgid "Post id can't be empty."
 msgstr "L'identifiant du post ne peut être vide."
 
 #: checked-post-endpoint.php:66
-msgid "Post title and content can't be empty."
-msgstr "Le titre et le contenu de l'article ne peuvent être vides."
+msgid "Post title, thumbnail and content can't be empty."
+msgstr "Le titre, l'image à la une et le contenu de l'article ne peuvent être vides."
 
 #: checked-post-endpoint.php:92
 msgid "Posts are not editable."
