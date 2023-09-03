@@ -2,12 +2,11 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="21c5f9b3-e0ae-4ebb-ad84-af840fe16bc7" name="prod-plugin" url="http://name.o2switch.net">
-        <fileTransfer host="name.o2switch.net" port="21">
+      <webServer id="21c5f9b3-e0ae-4ebb-ad84-af840fe16bc7" name="prod-plugin" url="http://menthol.o2switch.net">
+        <fileTransfer host="menthol.o2switch.net" port="21">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>
-          <option name="port" value="21" />
         </fileTransfer>
       </webServer>
     </option>

@@ -85,7 +85,7 @@ class Insert_Post_Endpoint
             $prop = 'src';
             $src = $img->$prop;
             $alt = 'alt';
-            $filename = $this->get_image_slug($img->$alt) . '.' . pathinfo($src)['extension'] ?? basename($src);
+            $filename = $this->get_image_slug($img->$alt) . '.jpeg'  ?? basename($src);
             $new_image_url = $this->save_media($src, $filename, $post_id, $existing_media, null);
             $img->$prop = $new_image_url;
         }
@@ -157,6 +157,7 @@ class Insert_Post_Endpoint
         $slug = str_replace('\'', '-', $slug);
         $slug = str_replace('?', '', $slug);
         $slug = str_replace('!', '', $slug);
+        $slug = str_replace(':', '', $slug);
         $unwanted_array = array(    'Š'=>'S', 'š'=>'s', 'Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A', 'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E',
             'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I', 'Ï'=>'I', 'Ñ'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U',
             'Ú'=>'U', 'Û'=>'U', 'Ü'=>'U', 'Ý'=>'Y', 'Þ'=>'B', 'ß'=>'Ss', 'à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a', 'å'=>'a', 'æ'=>'a', 'ç'=>'c',
