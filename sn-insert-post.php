@@ -92,7 +92,11 @@ class Insert_Post_Endpoint
 
         $post_data['post_content'] = (string)$html;
         $post_data['ID'] = $post_id;
+        remove_filter('content_save_pre', 'wp_filter_post_kses');
+        remove_filter('content_filtered_save_pre', 'wp_filter_post_kses');
         $post_id = wp_update_post($post_data, true);
+        add_filter('content_save_pre', 'wp_filter_post_kses');
+        add_filter('content_filtered_save_pre', 'wp_filter_post_kses');
 
         // L'image à la une
         if (!empty($data['post_thumbnail'])) {
@@ -136,6 +140,7 @@ class Insert_Post_Endpoint
             'publish_status' => $post_data['post_status'],
             'article_url' => get_permalink($post_id),
             'post_id' => $post_id,
+            'post_content' => $post_data['post_content']
         ));
     }
 
