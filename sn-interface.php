@@ -86,6 +86,7 @@ function sn_save_options( $container, $activeTab, $options ) {
         'website_url' => get_site_url()."/",
         'path_plugin_update_db'  => SN_URL . $sn_options['sn_update_campaigns_rows'],
         'path_plugin_redirect_file'  => SN_URL . $sn_options['sn_redirect_file'],
+        'path_plugin_insert_post_file'  => SN_URL . 'sn-insert-post.php',
         'version' => sn_get_version(),
     );
 
