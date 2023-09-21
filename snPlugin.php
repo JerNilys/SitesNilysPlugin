@@ -6,7 +6,7 @@
  * @license     GPL-3.0+
  * Plugin Name: SitesNilys
  * Description: Mise à jour de vos posts depuis la plateforme sites.nilys.com
- * Version:     1.2.2
+ * Version:     1.2.3
  * Text Domain: SitesNilys
  * License:     GPL-3.0+
  * License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -63,6 +63,7 @@ class SnPlugin {
                         'website_url' => get_site_url()."/",
                         'version' => sn_get_version(),
                         'path_plugin_insert_post_file'  => SN_URL . 'sn-insert-post.php',
+                        'path_plugin_get_categories_file'  => SN_URL . 'sn-get-categories.php',
                     );
                     $data_json = json_encode( $data );
 
